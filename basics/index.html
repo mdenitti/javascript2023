@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+  
+</head>
+<body>
+
+
+    <div id="result"></div>
+
+    <div id="iteration"></div>
+
+
+
+
+    <script>
+       /*  alert('hello world'); 
+        console.log('hello world');
+        variable declaration always starts with let or const;
+        most of the time we declare all the variable at the top of our function or code block */
+        let a; 
+        a = 10;
+        let b = 20;
+        let result = a + b + 30;
+        console.log('Mijn resultaat is: ' + result);
+        // Concatenation is the process of joining two or more strings together or a string with a number...
+   
+        // getElementById does not return an array but a single element
+        // getElementsByClassName returns an array
+
+        // first attach to the div
+        const resultdiv = document.getElementById('result');
+        resultdiv.innerHTML = result;
+        // the above does the SAME as the below
+        document.getElementById('result').innerHTML = 'Hello World';
+
+        // once we have resultdiv...we can assign another value to it...
+        resultdiv.innerHTML = 'Hello World2';
+        document.getElementById('result').innerHTML = result;
+
+        // iteration
+        let iterationresult = document.getElementById('iteration');
+        for (let i = 0; i < 10; i++) {
+            console.log(i);
+            iterationresult.innerHTML += i;
+        }
+
+
+   </script>
+</body>
+</html>
