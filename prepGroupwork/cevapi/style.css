@@ -1,0 +1,92 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f2f2f2;
+    background-image: url('https://www.recipesfromeurope.com/wp-content/uploads/2023/04/cevapi-recipe.jpg');
+    background-size: cover; 
+    background-attachment: fixed;
+}
+
+.details {
+    background-color: #faebd7db;
+    padding: 30px;
+    border-radius: 0px 20px;
+}
+
+h2.title {
+    background-color: #b95d38;
+    padding: 10px;
+    width: fit-content;
+    margin-bottom: 1px;
+    border-radius: 5px 5px 0px 0px;
+    color: white;
+    font-weight: 100;
+    border-radius: 0px 20px;
+}
+
+hr.line {
+    border-style: dashed;
+    color: #b95d38;
+}
+
+span.total {
+   /*  align top in col */
+    vertical-align: top;
+    font-size: 19px;
+    text-transform: capitalize;
+    font-weight: bolder;
+    color: #999c5f;
+}
+
+
+span.eur {
+    background-color: #999c5f;
+    color: white;
+    padding: 8px;
+    border-radius: 0px 10px;
+    font-size: 30px;
+    margin-left: 7px;
+}
+
+h1.cevapi {
+    background-color: antiquewhite;
+    padding: 19px;
+    width: fit-content;
+    border-radius: 20px 0px;
+    font-size: -webkit-xxx-large;
+    color: #420c0452;
+}
+
+button.btn.btn-primary.vibes {
+    display: block;
+    width: -webkit-fill-available;
+    margin-top: 6px;
+    font-size: 26px;
+    background-color: black;
+    border: none;
+}
+
+button.btn.btn-primary.vibes:hover {
+
+    background-color: rgba(0, 0, 0, 0.422);
+    
+}
+
+span.plus {
+    background-color: #fd4201;
+    padding: 5px 15px 5px 10px;
+    font-size: 17px;
+    border-radius: 71px;
+    float: right;
+}
+
+li.detailslist {
+    list-style: none;
+    /* border-bottom: aliceblue; */
+    border-style: dashed;
+    border-color: #202020;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-width: thin;
+    margin: 7px;
+}

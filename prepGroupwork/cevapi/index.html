@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h1 class="cevapi">CEV API</h1>
+            <h2 class="title">Select your cevapi vibes</h2>
+            <button onclick="orderItems('bread')" class="btn btn-primary vibes">Bread <span class="plus">+</span></button>
+            <button onclick="orderItems('meat')" class="btn btn-primary vibes">Meat <span class="plus">+</span></button>
+            <button onclick="orderItems('sauce')" class="btn btn-primary vibes">Sauce <span class="plus">+</span></button>
+            <button onclick="orderItems('salad')" class="btn btn-primary vibes">Salad <span class="plus">+</span></button>
+        </div>
+        <div class="col-md-6">
+            <h2 class="title">Your order</h2>
+            <div class="details">
+                <div id="items" class="items"></div>
+                
+                <span class="total">Total</span><span id="eur" class="eur">...</span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ 
+  <script src="core.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
