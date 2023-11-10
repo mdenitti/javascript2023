@@ -51,14 +51,23 @@
         console.log(myObject);
 
         // use case cevapi
+        // Do not forget to declare the variable as a object,
+        // otherwise you will get an error
         
-        let order ={};
+        let order={};
 
         order.type = 'small';
         order.sandwich = 4;
         order.saus = 2;
         order.schotel = 3;
         order.opties = 5;
+
+        let orderArray = [];
+        orderArray.push('small');
+        orderArray.push(4);
+        orderArray.push(2);
+        orderArray.push(3);
+        orderArray.push(5);
 
         console.log(order);
 
@@ -68,6 +77,7 @@
         }
 
         console.log(totalprice);
+
 
     </script>
 </body>
