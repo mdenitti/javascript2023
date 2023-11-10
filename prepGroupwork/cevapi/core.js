@@ -1,24 +1,29 @@
 let order = {
-    Bread: 8,
-    Meat: 3,
-    Sauce: 2,
-    Salad: 1
+    Bread: 0,
+    Meat: 0,
+    Sauce: 0,
+    Salad: 0
 };
 
+
 function orderItems(product) {
-    if (product = 'bread') {
-        order.Bread = order.Bread + 1;
+    if (product == 'bread') {
+        order.Bread = order.Bread + 4;
+      
     }
-    if (product = 'meat') {
-        order.Meat = order.Meat + 1;
+    if (product == 'meat') {
+        order.Meat = order.Meat + 5;
+      
     }
-    if (product = 'sauce') {
-        order.Sauce = order.Sauce + 1;
+    if (product == 'sauce') {
+        order.Sauce = order.Sauce + 2;
+       
     }
-    if (product = 'salad') {
-        order.Salad = order.Salad + 1;
+    if (product == 'salad') {
+        order.Salad = order.Salad + 2;
+       
     }
-    displayItems();
+    displayItems(); 
 }
 
 function displayItems () {
@@ -26,9 +31,17 @@ function displayItems () {
     itemView = document.getElementById('items');
     totalView = document.getElementById('eur');
 
+    // Clear the current items before displaying the updated list
+    itemView.innerHTML = '';
+
     for (key in order) {
         console.log(key, order[key]);
-        itemView.innerHTML += '<li class="detailslist">' + key + ' : ' + order[key] + ' EUR </li>';
+        if (!order[key] == 0) {
+            itemView.innerHTML += '<li class="detailslist">' + key + ' : ' + order[key] + ' EUR </li>';
+        }
+
+
+
         totalItems = totalItems + order[key];
     }
     totalView.innerHTML = totalItems + ' EUR';
