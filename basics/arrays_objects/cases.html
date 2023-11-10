@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="result"></div>
+
+    <script>
+        // ARRAYS OBJECTEN
+        myArray = [1,200,4,4,9,8,90];
+        myObject = {'num1':1,'num':2,'num3':3,'foutmelding':'Geen verbinding'};
+
+        // console.log(myObject.num1);
+
+        console.log(myArray);
+        console.log(myObject);
+
+        let myResult = document.getElementById('result');
+        myResult.innerHTML = myObject.foutmelding;
+
+        // Iteration of array with the for method
+
+        for (let i=0;myArray.length > i;i++) {
+            console.log(myArray[i]);
+        }
+
+        let i = 0;
+        while (myArray.length > i) {
+            console.log(myArray[i]);
+            i++;
+        }
+
+        // iteration of object using the for method
+        for (key in myObject) {
+            console.log(key);
+            console.log(myObject[key]);
+        }
+
+        // add an element to an array
+        myArray.push(6);
+        myArray.push(4);
+        myArray.push(5);
+        console.log(myArray);
+
+        // add an element my object
+        myObject.num4 = 4;
+        console.log(myObject);
+
+        // use case cevapi
+        
+        let order ={};
+
+        order.type = 'small';
+        order.sandwich = 4;
+        order.saus = 2;
+        order.schotel = 3;
+        order.opties = 5;
+
+        console.log(order);
+
+        let totalprice=0;
+        for (key in order) {
+          totalprice = totalprice + order[key];
+        }
+
+        console.log(totalprice);
+
+    </script>
+</body>
+</html>
