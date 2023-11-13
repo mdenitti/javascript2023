@@ -11,9 +11,17 @@
     
 <div class="container">
     <div class="row">
-        <div id="result" class="col-md-12">
-            
+        <div class="col-md-12">
+            <h1>Fetch API</h1>
+            <input id="movie" type="text" class="form-control mb-2">
+            <button class="btn btn-primary" onclick="getMovie()">Get Movie</button>
         </div>
+        
+    </div>
+    <div class="row">
+        <div id="resultName" class="col-md-6"></div>
+        <div id="resultYear" class="col-md-6"></div>
+
     </div>
 </div>
 
@@ -34,9 +42,34 @@
 
 // NEW ES6 NOTATION
 
-fetch('https://www.omdbapi.com/?i=tt3896198&apikey=d67c387a&s=barbie').then(result => result.json()).then(data => console.log(data)).catch();
-   obj = {name:'Massimo'};
-   console.log(obj.name)
+
+function getMovie () {
+valueMovie = document.getElementById('movie').value;
+
+fetch('https://www.omdbapi.com/?i=tt3896198&apikey=d67c387a&s='+valueMovie).then(result => result.json()).then(
+ 
+ data => {
+   let i = 0;
+   while (i < data['Search'].length) {
+     document.getElementById('resultName').innerHTML += data['Search'][i].Title + '<hr>';
+     document.getElementById('resultYear').innerHTML += data['Search'][i].Year + '<hr>';
+     console.log(data.Search[i].Title);
+     i++;
+   }
+ }
+ ).catch();
+}
+
+// same principal as the OMDBAPI movie restapi.. so this is our result... our dataset
+// created by the OMDBAPI developers! 
+   obj = {Search:[
+    {obj1:'value1'},
+    {obj2:'value2'}
+   ]};
+
+   console.log(obj['Search'][1].obj2)
+
+   
 </script>
 </body>
 </html>
