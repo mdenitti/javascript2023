@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+<body>
+    
+<div class="container">
+    <div class="row">
+        <div id="result" class="col-md-12">
+            
+        </div>
+    </div>
+</div>
+
+<script>
+   //function getMovie () {
+    // OLD ES5 notation ...
+//     fetch('url').then(
+//         function (res) {
+//             return res.json();
+//         }
+//     ).then(
+//         function (data) {
+//             console.log(data);
+//             // return
+//         }
+//     ).catch();
+//    }
+
+// NEW ES6 NOTATION
+
+fetch('https://www.omdbapi.com/?i=tt3896198&apikey=d67c387a&s=barbie').then(result => result.json()).then(data => console.log(data)).catch();
+   obj = {name:'Massimo'};
+   console.log(obj.name)
+</script>
+</body>
+</html>
