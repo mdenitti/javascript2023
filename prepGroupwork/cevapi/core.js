@@ -1,50 +1,55 @@
 let order = {
-    Bread: 0,
-    Meat: 0,
-    Sauce: 0,
-    Salad: 0
+    Bread: {
+        quantity: 0,
+        price: 4
+    },
+    Meat: {
+        quantity: 0,
+        price: 5
+    },
+    Sauce: {
+        quantity: 0,
+        price: 2
+    },
+    Salad: {
+        quantity: 0,
+        price: 2
+    }
 };
-
 
 function orderItems(product) {
     if (product == 'bread') {
-        order.Bread = order.Bread + 4;
-      
+        order.Bread.quantity += 1;
     }
     if (product == 'meat') {
-        order.Meat = order.Meat + 5;
-      
+        order.Meat.quantity += 1;
     }
     if (product == 'sauce') {
-        order.Sauce = order.Sauce + 2;
-       
+        order.Sauce.quantity += 1;
     }
     if (product == 'salad') {
-        order.Salad = order.Salad + 2;
-       
+        order.Salad.quantity += 1;
     }
-    displayItems(); 
+    displayItems();
 }
 
-function displayItems () {
-    let totalItems=0;
-    itemView = document.getElementById('items');
-    totalView = document.getElementById('eur');
+function displayItems() {
+    let totalItems = 0;
+    let itemView = document.getElementById('items');
+    let totalView = document.getElementById('eur');
 
     // Clear the current items before displaying the updated list
     itemView.innerHTML = '';
 
-    for (key in order) {
-        console.log(key, order[key]);
-        if (!order[key] == 0) {
-            itemView.innerHTML += '<li class="detailslist">' + key + ' : ' + order[key] + ' EUR </li>';
+    for (let key in order) {
+        console.log(key, order[key].quantity);
+        if (order[key].quantity !== 0) {
+            itemView.innerHTML += '<li class="detailslist">' + order[key].quantity + 'x ' + key + ' : ' + order[key].quantity * order[key].price + ' EUR </li>';
         }
-
-
-
-        totalItems = totalItems + order[key];
+        totalItems += order[key].quantity * order[key].price;
     }
     totalView.innerHTML = totalItems + ' EUR';
 }
 
+// Display initial items
 displayItems();

@@ -90,3 +90,7 @@ li.detailslist {
     border-width: thin;
     margin: 7px;
 }
+
+div#items {
+    margin-bottom: 25px;
+}
