@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Todo's</h1>
+                <div id="todo" class="todo">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        // get url
+        let url = 'https://jsonplaceholder.typicode.com/todos';
+       // fetch url and fabricate fetch train
+       fetch(url).then(res => res.json()).then(
+        // expand 3rd wagon and iterate the data
+        data => {
+            
+           let i = 0;
+           while (i < data.length) {
+            // assign data with append and use of a template literal
+            if (data[i].completed) {
+                document.getElementById('todo').innerHTML +=`<div class="alert alert-danger" role="alert">
+                <s>${data[i].title}</s>
+</div>`;
+            } else {
+                document.getElementById('todo').innerHTML +=`<div class="alert alert-primary" role="alert">
+                ${data[i].title}
+</div>`;
+            }
+            
+            console.log(data[i].title);
+            i++;
+           }
+
+        }
+
+       ).catch(error => console.log(error));
+       
+       
+       // make if clause to show data without and with striketrough
+
+
+
+    </script>
+</body>
+
+</html>
