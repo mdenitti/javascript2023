@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <h1>Fetch API</h1>
             <input id="movie" type="text" class="form-control mb-2">
-            <button class="btn btn-primary" onclick="getMovie()">Get Movie</button>
+            <button id="buttonmovie" class="btn btn-primary">Get Movie</button>
         </div>
         
     </div>
@@ -43,6 +43,7 @@
 // NEW ES6 NOTATION
 
 
+
 function getMovie () {
 valueMovie = document.getElementById('movie').value;
 
@@ -69,7 +70,26 @@ fetch('https://www.omdbapi.com/?i=tt3896198&apikey=d67c387a&s='+valueMovie).then
 
    console.log(obj['Search'][1].obj2)
 
+// Make sure to declare variables with 'const' or 'let'
+const getMovie2 = async () => {
+    const valueMovie = document.getElementById('movie').value;
+    const url = 'https://www.omdbapi.com/?i=tt3896198&apikey=d67c387a&s=' + valueMovie;
+
+    // async await fetch
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
    
+    for (let i = 0; i < data['Search'].length; i++) {
+        document.getElementById('resultName').innerHTML += data['Search'][i].Title + '<hr>';
+    }
+
+    console.log(data);
+}
+
+// Pass the function reference without invoking it
+document.getElementById('buttonmovie').addEventListener('click', getMovie2);
+
 </script>
 </body>
 </html>
