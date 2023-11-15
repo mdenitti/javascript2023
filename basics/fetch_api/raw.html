@@ -42,14 +42,17 @@
     const showFavie = () => {
         faviesList = document.getElementById('favies');
         
-        // if movies is not set as localStorage use a nullish coalescence to create a empty array
+        // Clear the content of faviesList
+        faviesList.innerHTML = '';
+
+        // if movies is not set as localStorage use a nullish coalescence to create an empty array
         favieStorage = JSON.parse(localStorage.getItem('movies')) || [];
         console.log(favieStorage);
 
-        for (let i = 0; favieStorage.length > i;i++) {
-            console.log (favieStorage[i].Title);
-            faviesList.innerHTML +=`<span class="badge bg-dark p-2 m-1">${favieStorage[i].Title}</span>`;
-        }  
+        for (let i = 0; favieStorage.length > i; i++) {
+            console.log(favieStorage[i].Title);
+            faviesList.innerHTML += `<span class="badge bg-dark p-2 m-1">${favieStorage[i].Title}</span>`;
+        }
     }
 
     showFavie();
@@ -106,10 +109,11 @@
 
                 // store in local storage
                 localStorage.setItem('movies', JSON.stringify(existingFavie));
+                showFavie();
             }
         ).catch(error => console.log(error));
     // refresh the dom with new favorites
-    showFavie();
+    
     }
 
 
