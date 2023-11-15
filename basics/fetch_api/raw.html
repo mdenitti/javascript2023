@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Movie database with favie selection</h1>
+                <input id="movie" type="text" class="form-control mb-2">
+                <button id="buttonmovie" class="btn btn-primary">Get Movie</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 mt-4">
+                <h3>Favorites</h3>
+                <div id="favies" class="list">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4" id="list">
+        </div>
+
+    </div>
+
+</body>
+
+
+<script>
+    // when page is loaded
+    const showFavie = () => {
+        faviesList = document.getElementById('favies');
+        
+        // if movies is not set as localStorage use a nullish coalescence to create a empty array
+        favieStorage = JSON.parse(localStorage.getItem('movies')) || [];
+        console.log(favieStorage);
+
+        for (let i = 0; favieStorage.length > i;i++) {
+            console.log (favieStorage[i].Title);
+            faviesList.innerHTML +=`<span class="badge bg-dark p-2 m-1">${favieStorage[i].Title}</span>`;
+        }  
+    }
+
+    showFavie();
+
+
+    // After consulting the API documentation... i need 2 endpoints SEARCH/DETAILS
+    const urls = 'https://www.omdbapi.com/?apikey=d67c387a&s=';
+    const urli = 'https://www.omdbapi.com/?apikey=d67c387a&i=';
+
+    const getMovie = () => {
+        let movieValue = document.getElementById('movie').value;
+        fetch(urls + movieValue).then(res => res.json()).then(
+            data => {
+                console.log(data['Search']);
+                list = document.getElementById('list')
+                let i = 0;
+                while (i < data['Search'].length) {
+                    list.innerHTML += `
+                        <div class="col-md">
+                            <div class="card" style="width: 18rem;">
+                                <img src="${data['Search'][i].Poster}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">${data['Search'][i].Title} (${data['Search'][i].Year})</h5>
+                                    <p class="card-text"><h6>${data['Search'][i].Type}</h6></p>
+                                    <a onclick="addToFavie('${data['Search'][i].imdbID}')" class="btn btn-success">Add to favie</a>
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                    i++
+                }
+            }
+        ).catch(error => console.log(error));
+    }
+
+    const addToFavie = (id) => {
+        console.log(id);
+        fetch(urli+id).then(res => res.json()).then(
+            data => {
+                console.log(data);
+
+                // retrieve existing favorite movies from local storage
+                let storedMovies = localStorage.getItem('movies')
+                let existingFavie;
+
+                if (storedMovies) {
+                    existingFavie = JSON.parse(storedMovies);
+                } else {
+                    existingFavie = [];
+                }
+
+                // add the new movie to the arrays of favorites
+                existingFavie.push(data);
+
+                // store in local storage
+                localStorage.setItem('movies', JSON.stringify(existingFavie));
+            }
+        ).catch(error => console.log(error));
+    // refresh the dom with new favorites
+    showFavie();
+    }
+
+
+    document.getElementById('buttonmovie').addEventListener('click', getMovie);
+
+    // CSS tweak image height - nice equal colums
+    // Provide a button to clear the localstorage (reset favie)
+    // Provide a button to delete ONE movie in the favie list
+    // fix the double show when adding favies (until refresh)
+</script>
+
+</html>
