@@ -7,6 +7,22 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <style>
+        span.delete-btn {
+            background-color: white;
+            color: black;
+            padding: 3px;
+            border-radius: 3px;
+            margin-left: 6px;
+            margin-right: -4px;
+            cursor: pointer;
+        }
+
+        h1.title {
+            font-weight: 200;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -14,9 +30,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Movie database with favie selection</h1>
-                <input id="movie" type="text" class="form-control mb-2">
-                <button id="buttonmovie" class="btn btn-primary">Get Movie</button>
+                <h1 class="title">Search for your favorite movies and save them in a favie list</h1>
+                <input id="movie" type="text" class="form-control mb-2" required>
+                <button id="buttonmovie" class="btn btn-primary">Search moviedatabase</button>
+                <button id="resetFavie" class="btn btn-danger">Reset Favorites</button>
             </div>
         </div>
 
@@ -24,7 +41,7 @@
             <div class="col-md-12 mt-4">
                 <h3>Favorites</h3>
                 <div id="favies" class="list">
-                    
+
                 </div>
             </div>
         </div>
@@ -41,18 +58,29 @@
     // when page is loaded
     const showFavie = () => {
         faviesList = document.getElementById('favies');
-        
-        // Clear the content of faviesList
         faviesList.innerHTML = '';
 
-        // if movies is not set as localStorage use a nullish coalescence to create an empty array
         favieStorage = JSON.parse(localStorage.getItem('movies')) || [];
-        console.log(favieStorage);
 
-        for (let i = 0; favieStorage.length > i; i++) {
-            console.log(favieStorage[i].Title);
-            faviesList.innerHTML += `<span class="badge bg-dark p-2 m-1">${favieStorage[i].Title}</span>`;
+        if (favieStorage.length === 0) {
+            faviesList.innerHTML = '<p>No favorites yet</p>';
+        } else {
+            for (let i = 0; favieStorage.length > i; i++) {
+                const movie = favieStorage[i];
+                faviesList.innerHTML += `
+                <div class="badge bg-dark p-2 m-1">
+                    ${movie.Title} 
+                    <span class="delete-btn" onclick="deleteFromFavie(${i})">x</span>
+                </div>`;
+            }
         }
+    }
+
+    const deleteFromFavie = (index) => {
+        let favieStorage = JSON.parse(localStorage.getItem('movies')) || [];
+        favieStorage.splice(index, 1);
+        localStorage.setItem('movies', JSON.stringify(favieStorage));
+        showFavie();
     }
 
     showFavie();
@@ -64,6 +92,14 @@
 
     const getMovie = () => {
         let movieValue = document.getElementById('movie').value;
+
+        // Check if the movie input is empty
+        if (movieValue.trim() === '') {
+            alert('Please enter a movie name before searching.');
+            return;
+        }
+
+
         fetch(urls + movieValue).then(res => res.json()).then(
             data => {
                 console.log(data['Search']);
@@ -71,59 +107,72 @@
                 let i = 0;
                 while (i < data['Search'].length) {
                     list.innerHTML += `
-                        <div class="col-md">
-                            <div class="card" style="width: 18rem;">
-                                <img src="${data['Search'][i].Poster}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">${data['Search'][i].Title} (${data['Search'][i].Year})</h5>
-                                    <p class="card-text"><h6>${data['Search'][i].Type}</h6></p>
-                                    <a onclick="addToFavie('${data['Search'][i].imdbID}')" class="btn btn-success">Add to favie</a>
-                                </div>
+                    <div class="col-md" style="margin-bottom: 20px;">
+                        <div class="card" style="width: 15rem; text-align: left;">
+                            <img src="${data['Search'][i].Poster}" class="card-img-top" alt="..." style="height: 300px;">
+                            <div class="card-body">
+                                <h5 class="card-title">${data['Search'][i].Title} (${data['Search'][i].Year})</h5>
+                                <p class="card-text"><h6>${data['Search'][i].Type}</h6></p>
+                                <a onclick="addToFavie('${data['Search'][i].imdbID}')" class="btn btn-success">Add to favie</a>
                             </div>
                         </div>
-                        `;
-                    i++
+                    </div>
+                `;
+                    i++;
                 }
             }
         ).catch(error => console.log(error));
     }
 
-    const addToFavie = (id) => {
-        console.log(id);
-        fetch(urli+id).then(res => res.json()).then(
-            data => {
-                console.log(data);
+    // Function to clear local storage
+    const resetFavie = () => {
+        localStorage.removeItem('movies');
+        showFavie(); // Refresh the display after clearing local storage
+    }
 
-                // retrieve existing favorite movies from local storage
-                let storedMovies = localStorage.getItem('movies')
+    // Function to add a movie object to the localstorage
+    const addToFavie = (id) => {
+        fetch(urli + id)
+            .then(res => res.json())
+            .then(data => {
+                // Retrieve existing favorite movies from local storage
+                let storedMovies = localStorage.getItem('movies');
                 let existingFavie;
 
                 if (storedMovies) {
                     existingFavie = JSON.parse(storedMovies);
+
+                    // Check if the movie is already in the favorite list
+                    const isDuplicate = existingFavie.some(movie => movie.imdbID === data.imdbID);
+
+                    if (isDuplicate) {
+                        alert('Movie already in your favorite list');
+                        return;
+                    }
                 } else {
                     existingFavie = [];
                 }
 
-                // add the new movie to the arrays of favorites
+                // Add the new movie to the array of favorites
                 existingFavie.push(data);
 
-                // store in local storage
+                // Store in local storage
                 localStorage.setItem('movies', JSON.stringify(existingFavie));
                 showFavie();
-            }
-        ).catch(error => console.log(error));
-    // refresh the dom with new favorites
-    
+            })
+            .catch(error => console.log(error));
     }
 
 
     document.getElementById('buttonmovie').addEventListener('click', getMovie);
+    document.getElementById('resetFavie').addEventListener('click', resetFavie);
 
-    // CSS tweak image height - nice equal colums
-    // Provide a button to clear the localstorage (reset favie)
-    // Provide a button to delete ONE movie in the favie list
-    // fix the double show when adding favies (until refresh)
-    // click on favie to see details
+
+    // CSS tweak image height - nice equal colums (DONE)
+    // Provide a button to clear the localstorage (reset favie) (DONE)
+    // Provide a button to delete ONE movie in the favie list (DONE)
+    // fix the double show when adding favies (until refresh) (DONE)
+    // click on favie to see details (IN PROGRESS)
 </script>
 
 </html>
