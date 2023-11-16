@@ -91,38 +91,44 @@
     const urli = 'https://www.omdbapi.com/?apikey=d67c387a&i=';
 
     const getMovie = () => {
-        let movieValue = document.getElementById('movie').value;
+    let movieValue = document.getElementById('movie').value;
 
-        // Check if the movie input is empty
-        if (movieValue.trim() === '') {
-            alert('Please enter a movie name before searching.');
-            return;
-        }
+    // Check if the movie input is empty
+    if (movieValue.trim() === '') {
+        alert('Please enter a movie name before searching.');
+        return;
+    }
 
-
-        fetch(urls + movieValue).then(res => res.json()).then(
-            data => {
+    fetch(urls + movieValue)
+        .then(res => res.json())
+        .then(data => {
+            if (data.Response === 'False' && data.Error === 'Movie not found!') {
+                // Display a message when no movie is found
+                alert('No movie found. Please try again with a different search term.');
+            } else {
+                // Continue with the code to display movie information
                 console.log(data['Search']);
-                list = document.getElementById('list')
+                list = document.getElementById('list');
                 let i = 0;
                 while (i < data['Search'].length) {
                     list.innerHTML += `
-                    <div class="col-md" style="margin-bottom: 20px;">
-                        <div class="card" style="width: 15rem; text-align: left;">
-                            <img src="${data['Search'][i].Poster}" class="card-img-top" alt="..." style="height: 300px;">
-                            <div class="card-body">
-                                <h5 class="card-title">${data['Search'][i].Title} (${data['Search'][i].Year})</h5>
-                                <p class="card-text"><h6>${data['Search'][i].Type}</h6></p>
-                                <a onclick="addToFavie('${data['Search'][i].imdbID}')" class="btn btn-success">Add to favie</a>
+                        <div class="col-md" style="margin-bottom: 20px;">
+                            <div class="card" style="width: 15rem; text-align: left;">
+                                <img src="${data['Search'][i].Poster}" class="card-img-top" alt="..." style="height: 300px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${data['Search'][i].Title} (${data['Search'][i].Year})</h5>
+                                    <p class="card-text"><h6>${data['Search'][i].Type}</h6></p>
+                                    <a onclick="addToFavie('${data['Search'][i].imdbID}')" class="btn btn-success">Add to favie</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `;
+                    `;
                     i++;
                 }
             }
-        ).catch(error => console.log(error));
-    }
+        })
+        .catch(error => console.log(error));
+};
 
     // Function to clear local storage
     const resetFavie = () => {
