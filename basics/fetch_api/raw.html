@@ -8,6 +8,32 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <style>
+        body {
+            background-image: url('https://media.licdn.com/dms/image/C4E12AQHRbEdgOdiEqQ/article-cover_image-shrink_600_2000/0/1520087361598?e=2147483647&v=beta&t=_JYa4nURC0ZDp-IOKl4e9JaQnvHy4uJ-AoWX6o_3lNc'), linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.274));
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0px;
+
+        }
+
+        .container {
+            background-color: #000000ba;
+            padding: 30px;
+        }
+
+
+        .btn {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
         span.delete-btn {
             background-color: white;
             color: black;
@@ -18,8 +44,13 @@
             cursor: pointer;
         }
 
-        h1.title {
+        .title {
             font-weight: 200;
+            color: white;
+        }
+
+        p.nofavie {
+            color: white;
         }
     </style>
 
@@ -39,7 +70,7 @@
 
         <div class="row">
             <div class="col-md-12 mt-4">
-                <h3>Favorites</h3>
+                <h3 class="title">Favorites</h3>
                 <div id="favies" class="list">
 
                 </div>
@@ -63,7 +94,7 @@
         favieStorage = JSON.parse(localStorage.getItem('movies')) || [];
 
         if (favieStorage.length === 0) {
-            faviesList.innerHTML = '<p>No favorites yet</p>';
+            faviesList.innerHTML = '<p class="nofavie">No favorites yet</p>';
         } else {
             for (let i = 0; favieStorage.length > i; i++) {
                 const movie = favieStorage[i];
@@ -91,44 +122,44 @@
     const urli = 'https://www.omdbapi.com/?apikey=d67c387a&i=';
 
     const getMovie = () => {
-    let movieValue = document.getElementById('movie').value;
+        let movieValue = document.getElementById('movie').value;
 
-    // Check if the movie input is empty
-    if (movieValue.trim() === '') {
-        alert('Please enter a movie name before searching.');
-        return;
-    }
+        // Check if the movie input is empty
+        if (movieValue.trim() === '') {
+            alert('Please enter a movie name before searching.');
+            return;
+        }
 
-    fetch(urls + movieValue)
-        .then(res => res.json())
-        .then(data => {
-            if (data.Response === 'False' && data.Error === 'Movie not found!') {
-                // Display a message when no movie is found
-                alert('No movie found. Please try again with a different search term.');
-            } else {
-                // Continue with the code to display movie information
-                console.log(data['Search']);
-                list = document.getElementById('list');
-                let i = 0;
-                while (i < data['Search'].length) {
-                    list.innerHTML += `
-                        <div class="col-md" style="margin-bottom: 20px;">
-                            <div class="card" style="width: 15rem; text-align: left;">
-                                <img src="${data['Search'][i].Poster}" class="card-img-top" alt="..." style="height: 300px;">
-                                <div class="card-body">
-                                    <h5 class="card-title">${data['Search'][i].Title} (${data['Search'][i].Year})</h5>
-                                    <p class="card-text"><h6>${data['Search'][i].Type}</h6></p>
-                                    <a onclick="addToFavie('${data['Search'][i].imdbID}')" class="btn btn-success">Add to favie</a>
-                                </div>
+        fetch(urls + movieValue)
+            .then(res => res.json())
+            .then(data => {
+                if (data.Response === 'False' && data.Error === 'Movie not found!') {
+                    // Display a message when no movie is found
+                    alert('No movie found. Please try again with a different search term.');
+                } else {
+                    // Continue with the code to display movie information
+                    console.log(data['Search']);
+                    list = document.getElementById('list');
+                    let i = 0;
+                    while (i < data['Search'].length) {
+                        list.innerHTML += `
+                    <div class="col-md-3" style="margin-bottom: 20px; display: inline-block; width: 16rem; text-align: left;">
+                        <div class="card">
+                            <img src="${data['Search'][i].Poster}" class="card-img-top" alt="..." style="height: 300px;">
+                            <div class="card-body" style="padding: 10px;">
+                                <h5 class="card-title">${data['Search'][i].Title} (${data['Search'][i].Year})</h5>
+                                <p class="card-text" style="margin-bottom: 0;"><h6>${data['Search'][i].Type}</h6></p>
+                                <a onclick="addToFavie('${data['Search'][i].imdbID}')" class="btn btn-success" style="margin-top: 10px;">Add to favie</a>
                             </div>
                         </div>
-                    `;
-                    i++;
+                    </div>
+                `;
+                        i++;
+                    }
                 }
-            }
-        })
-        .catch(error => console.log(error));
-};
+            })
+            .catch(error => console.log(error));
+    };
 
     // Function to clear local storage
     const resetFavie = () => {
