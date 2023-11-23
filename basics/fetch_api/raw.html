@@ -91,6 +91,7 @@
         faviesList = document.getElementById('favies');
         faviesList.innerHTML = '';
 
+        // created a JS object with methods i can actualy use...
         favieStorage = JSON.parse(localStorage.getItem('movies')) || [];
 
         if (favieStorage.length === 0) {
@@ -122,6 +123,7 @@
     const urli = 'https://www.omdbapi.com/?apikey=d67c387a&i=';
 
     const getMovie = () => {
+        // retrieve from input
         let movieValue = document.getElementById('movie').value;
 
         // Check if the movie input is empty
@@ -142,18 +144,23 @@
                     list = document.getElementById('list');
                     let i = 0;
                     while (i < data['Search'].length) {
+                        let posterURL = data['Search'][i].Poster;
+                        if (posterURL == 'N/A') {
+                            posterURL = "https://via.placeholder.com/250"; // Replace with the path to your placeholder image
+                        }
+
                         list.innerHTML += `
-                    <div class="col-md-3" style="margin-bottom: 20px; display: inline-block; width: 16rem; text-align: left;">
-                        <div class="card">
-                            <img src="${data['Search'][i].Poster}" class="card-img-top" alt="..." style="height: 300px;">
-                            <div class="card-body" style="padding: 10px;">
-                                <h5 class="card-title">${data['Search'][i].Title} (${data['Search'][i].Year})</h5>
-                                <p class="card-text" style="margin-bottom: 0;"><h6>${data['Search'][i].Type}</h6></p>
-                                <a onclick="addToFavie('${data['Search'][i].imdbID}')" class="btn btn-success" style="margin-top: 10px;">Add to favie</a>
+                            <div class="col-md-3" style="margin-bottom: 20px; display: inline-block; width: 16rem; text-align: left;">
+                                <div class="card">
+                                    <img src="${posterURL}" class="card-img-top" alt="..." style="height: 300px;">
+                                    <div class="card-body" style="padding: 10px;">
+                                        <h5 class="card-title">${data['Search'][i].Title} (${data['Search'][i].Year})</h5>
+                                        <p class="card-text" style="margin-bottom: 0;"><h6>${data['Search'][i].Type}</h6></p>
+                                        <a onclick="addToFavie('${data['Search'][i].imdbID}')" class="btn btn-success" style="margin-top: 10px;">Add to favie</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                `;
+                        `;
                         i++;
                     }
                 }
@@ -200,7 +207,7 @@
             .catch(error => console.log(error));
     }
 
-
+    // event listeners
     document.getElementById('buttonmovie').addEventListener('click', getMovie);
     document.getElementById('resetFavie').addEventListener('click', resetFavie);
 
@@ -209,6 +216,7 @@
     // Provide a button to clear the localstorage (reset favie) (DONE)
     // Provide a button to delete ONE movie in the favie list (DONE)
     // fix the double show when adding favies (until refresh) (DONE)
+    // Made it impossible to add duplicates (DONE)
     // click on favie to see details (IN PROGRESS)
 </script>
 
