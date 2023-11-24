@@ -29,3 +29,7 @@ class Robot {
     transform = () => console.log("Optimus prime!")
     sayPhrase = () => console.log(this.phrase)
 }
+
+// Instantiate the Alien, Bug, and Robot classes
+// Use the new keyword to create new objects of each class
+// Call the methods on each object
