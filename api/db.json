@@ -1,0 +1,49 @@
+{
+    "posts": [
+      {
+        "id": 1,
+        "title": "json-server",
+        "author": "typicode",
+        "body": "lorem ipsum"
+      },
+      {
+        "title": "Piet's Gebakjes",
+        "author": "Piet Huipetruyt",
+        "body": "lorem ipsum",
+        "id": 4
+      },
+      {
+        "title": "test",
+        "author": "test",
+        "id": 5
+      },
+      {
+        "title": "dsdsfds",
+        "body": "dsfsfffsfsdf",
+        "author": "dsfdsdf",
+        "id": 6
+      },
+      {
+        "title": "sdfsdf",
+        "body": "dsfsfsf\n",
+        "author": "sdfsdf",
+        "id": 7
+      },
+      {
+        "title": "Master yoda's wisdom booklet",
+        "body": "Booklet buy you must...\n",
+        "author": "The MY man",
+        "id": 8
+      }
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "body": "some comment",
+        "postId": 1
+      }
+    ],
+    "profile": {
+      "name": "typicode"
+    }
+  }
