@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spinner Demo</title>
+    <style>
+        #spinner {
+            display: none;
+            /* Add any styling for the spinner container here */
+        }
+    </style>
+</head>
+<body>
+
+<div id="spinner">
+    <img src="spin.gif" alt="Loading Spinner">
+</div>
+
+<script>
+   
+    function showSpinner() {
+        document.getElementById('spinner').style.display = 'block';
+    }
+
+    function hideSpinner() {
+        document.getElementById('spinner').style.display = 'none';
+    }
+
+    function simulateAsyncOperation() {
+        return new Promise((resolve, reject) => {
+            // Simulating an asynchronous operation
+            setTimeout(() => {
+                // Uncomment the next line to simulate an error
+                // throw new Error('Something went wrong');
+
+                resolve('Operation completed successfully!');
+            }, 2000);
+        });
+    }
+
+    function performTaskWithSpinner() {
+        showSpinner();
+
+        try {
+            simulateAsyncOperation()
+                .then((result) => {
+                    console.log(result);
+                })
+                .catch((error) => {
+                    console.error(error);
+                })
+                .finally(() => {
+                    hideSpinner();
+                });
+        } catch (error) {
+            console.error(error);
+            hideSpinner();
+        }
+    }
+
+    // Trigger the task with spinner
+    performTaskWithSpinner();
+</script>
+
+</body>
+</html>
