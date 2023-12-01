@@ -1,28 +1,10 @@
 {
   "posts": [
     {
-      "title": "dsfdsfsdfsdf",
-      "id": 8
-    },
-    {
-      "title": "lsdkfjsdlfkj",
-      "id": 9
-    },
-    {
-      "title": "xwwcwc",
-      "body": "xwxwcwxc\n",
-      "author": "wxcwxcwx",
-      "id": 10
-    },
-    {
-      "title": "\\",
-      "body": "\\\n",
-      "author": "\\",
-      "id": 11
-    },
-    {
-      "title": "sdfsfsdf",
-      "id": 12
+      "title": "Chinese Books",
+      "body": "<p>POSO dosi <strong>CLIMATE</strong></p>",
+      "author": "Lee Hwak",
+      "id": 1
     }
   ],
   "comments": [],

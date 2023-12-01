@@ -5,7 +5,7 @@ const blog = document.getElementById("blog");
 // Get all posts - services...
 const getLocalApi = () => {
     return fetch(apiUrl)
-        .then(response => response.json())
+        .then(response => response.json());
 }
 
 // Display all posts
@@ -35,7 +35,7 @@ const displayData = () => {
         });
 }
 
-// Post data to server extraced from method becuz of service concept
+// Post data to server extracted from method because of service concept
 const postLocalApi = (postData) => {
     return fetch(apiUrl, {
         method: 'POST',
@@ -51,7 +51,7 @@ const postLocalApi = (postData) => {
 // Get data from form
 const submitData = () => {
     const title = document.getElementById("title").value;
-    const body = quill.getText();
+    const body = quill.root.innerHTML;
     const author = document.getElementById("author").value;
 
     if (title === "" || body === "" || author === "") {
@@ -80,16 +80,24 @@ const submitData = () => {
 const editPost = (postId) => {
     const newTitle = prompt("Enter the new title:");
     if (newTitle !== null) {
-        fetch(`${apiUrl}/${postId}`, {
-            // fetch(apiUrl+"postId) {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ title: newTitle })
-        })
+        // Fetch the existing post data
+        fetch(`${apiUrl}/${postId}`)
             .then(response => response.json())
-            .then(() => displayData());
+            .then(existingPost => {
+                // Update the title
+                existingPost.title = newTitle;
+
+                // Send the updated post object to the server
+                fetch(`${apiUrl}/${postId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(existingPost)
+                })
+                .then(response => response.json())
+                .then(() => displayData());
+            });
     }
 }
 
@@ -105,7 +113,8 @@ const deletePost = (postId) => {
     }
 }
 
+// Display all posts on page load
 displayData();
 
-// event trigger for submit
+// Event trigger for submit
 document.getElementById("submit").addEventListener("click", submitData);

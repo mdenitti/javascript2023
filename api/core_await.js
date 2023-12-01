@@ -1,22 +1,16 @@
-// get all core functions and methods
-const apiUrl = " http://localhost:3000/posts";
+const apiUrl = "http://localhost:3000/posts";
 const blog = document.getElementById("blog");
 
-
-// Get all posts
 const getLocalApi = async () => {
     const response = await fetch(apiUrl);
     const data = await response.json();
     return data;
 }
 
-// Display all posts
-// Display all posts
-// Display all posts sorted by id
 const displayData = async () => {
     const data = await getLocalApi();
-    const sortedData = data.sort((a, b) => b.id - a.id); // Sort by id
-    blog.innerHTML = ""; // Clear existing content
+    const sortedData = data.sort((a, b) => b.id - a.id);
+    blog.innerHTML = "";
 
     sortedData.forEach(post => {
         const card = document.createElement("div");
@@ -37,9 +31,6 @@ const displayData = async () => {
     });
 }
 
-
-
-// Post data to server
 const postLocalApi = async (postData) => {
     const response = await fetch(apiUrl, {
         method: 'POST',
@@ -52,7 +43,6 @@ const postLocalApi = async (postData) => {
     return data;
 }
 
-// Get data from form
 const submitData = async () => {
     const title = document.getElementById("title").value;
     const body = quill.getText();
@@ -79,7 +69,6 @@ const submitData = async () => {
     displayData();
 }
 
-// Edit post
 const editPost = async (postId) => {
     const newTitle = prompt("Enter the new title:");
     if (newTitle !== null) {
@@ -95,7 +84,6 @@ const editPost = async (postId) => {
     }
 }
 
-// Delete post
 const deletePost = async (postId) => {
     const confirmDelete = confirm("Are you sure you want to delete this post?");
     if (confirmDelete) {
@@ -106,7 +94,6 @@ const deletePost = async (postId) => {
         displayData();
     }
 }
-
 
 displayData();
 
