@@ -81,7 +81,7 @@ const editPost = (postId) => {
     const newTitle = prompt("Enter the new title:");
     if (newTitle !== null) {
         fetch(`${apiUrl}/${postId}`, {
-            // fetch(apiUrl+"/"+postId), { concat alterntive
+            // fetch(apiUrl+"postId) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
