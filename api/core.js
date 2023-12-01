@@ -51,7 +51,7 @@ const postLocalApi = (postData) => {
 // Get data from form
 const submitData = () => {
     const title = document.getElementById("title").value;
-    const body = quill.getText();
+    const body = quill.root.innerHTML; //get quill editor's HTML content
     const author = document.getElementById("author").value;
 
     if (title === "" || body === "" || author === "") {
@@ -69,7 +69,7 @@ const submitData = () => {
         .then(() => {
             // clear the form
             document.getElementById("title").value = "";
-            document.getElementById("editor").value = "";
+            quill.root.innerHTML=""; // Clear Quill editor's content
             document.getElementById("author").value = "";
 
             displayData();
@@ -79,19 +79,25 @@ const submitData = () => {
 // Edit post
 const editPost = (postId) => {
     const newTitle = prompt("Enter the new title:");
+    const newBody = prompt("Enter the new body:");
+    const newAuthor = prompt("Enter the new Author:");
+  
     if (newTitle !== null) {
-        fetch(`${apiUrl}/${postId}`, {
-            // fetch(apiUrl+"postId) {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ title: newTitle })
+      fetch(`${apiUrl}/${postId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: newTitle,
+          body: newBody,
+          author: newAuthor
         })
-            .then(response => response.json())
-            .then(() => displayData());
+      })
+        .then(response => response.json())
+        .then(() => displayData());
     }
-}
+  }
 
 // Delete post
 const deletePost = (postId) => {
